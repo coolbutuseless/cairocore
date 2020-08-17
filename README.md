@@ -20,6 +20,9 @@ PDF, PNG etc).
 This package is *not* a graphics device - you can’t plot to it. Instead
 it provides a canvas for directly drawing shapes and text.
 
+**View the online documentation
+[here](https://coolbutuseless.github.io/package/cairocore/index.html)**
+
 <div>
 
 <img src="man/figures/demo-shapes.png"     width="45%" style="float: left;" />
@@ -116,6 +119,9 @@ may be lightly modified and used as R code.
 The documentation for `cairocore` is mostly a direct translation of the
 [`CairoGraphics` documentation](https://www.cairographics.org/manual/)
 and has been extracted from the C source files.
+
+**View the online documentation
+[here](https://coolbutuseless.github.io/package/cairocore/index.html)**
 
 A great tutorial on using CairoGraphics in C is from
 [zetcode](http://zetcode.com/gfx/cairo/).
