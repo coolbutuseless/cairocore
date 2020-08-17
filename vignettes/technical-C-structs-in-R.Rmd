@@ -1,0 +1,90 @@
+---
+title: "Technical - C structs in R"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Technical - C structs in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>"
+)
+
+library(cairocore)
+```
+
+
+# Structs in C
+
+`structs` in C are a data structure for combining items which may be of different types.
+
+In Cairo, a common struct contains the data defining a single rectangle.
+
+
+```
+typedef struct _cairo_rectangle {
+    double x, 
+    double y, 
+    double width, 
+    double height;
+} cairo_rectangle_t;
+```
+
+Elements of a struct may be accessed by name using `->` or `.` depending on whether it is
+a pointer or not
+
+```
+void some_function(cairo_rectangle_t *my_rect) {
+  printf("My rectangle width is %f\n", my_rect->width);
+}
+```
+
+
+# Structs in R
+
+`structs` in R are implemented as external pointer objects:
+
+* they're *opaque* in the sense that you can't see into them.
+* they're *pointer objects* in the sense that they are what R refers to as *External Pointers*, and 
+  merely contain the address of the data in memory.
+
+In this next example,  a rectangle struct is created in R.  Note: 
+
+* The function for the creation of a struct is the same name as the struct itself
+* The class of the returned object is the same as the struct
+* The object is an external pointer
+
+```{r}
+my_rect <- cairo_rectangle_t(x = 10, y = 10, width = 100, height = 200)
+
+my_rect
+typeof(my_rect)
+class(my_rect)
+```
+
+
+# Struct helpers in R - `as.list()`
+
+For some structs, the `as.list()` method has been implemented on the class to 
+convert the external pointer to a regular R list.
+
+Note: This is not currently a link between the external pointer data and the list representation.  Changing 
+one of the objects doesn't not change the other one.
+
+```{r}
+as.list(my_rect)
+```
+
+
+
+
+
+
+
+
+
+
+

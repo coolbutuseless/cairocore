@@ -1,0 +1,2 @@
+
+PKG_LIBS = `pkg-config --cflags --libs cairo`

@@ -1,0 +1,60 @@
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' cairo_int_status_t
+#'
+#' @export
+#' @family enum
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_int_status_t <- list(
+  CAIRO_INT_STATUS_SUCCESS                           =    0L,
+  CAIRO_INT_STATUS_NO_MEMORY                         =    1L,
+  CAIRO_INT_STATUS_INVALID_RESTORE                   =    2L,
+  CAIRO_INT_STATUS_INVALID_POP_GROUP                 =    3L,
+  CAIRO_INT_STATUS_NO_CURRENT_POINT                  =    4L,
+  CAIRO_INT_STATUS_INVALID_MATRIX                    =    5L,
+  CAIRO_INT_STATUS_INVALID_STATUS                    =    6L,
+  CAIRO_INT_STATUS_NULL_POINTER                      =    7L,
+  CAIRO_INT_STATUS_INVALID_STRING                    =    8L,
+  CAIRO_INT_STATUS_INVALID_PATH_DATA                 =    9L,
+  CAIRO_INT_STATUS_READ_ERROR                        =   10L,
+  CAIRO_INT_STATUS_WRITE_ERROR                       =   11L,
+  CAIRO_INT_STATUS_SURFACE_FINISHED                  =   12L,
+  CAIRO_INT_STATUS_SURFACE_TYPE_MISMATCH             =   13L,
+  CAIRO_INT_STATUS_PATTERN_TYPE_MISMATCH             =   14L,
+  CAIRO_INT_STATUS_INVALID_CONTENT                   =   15L,
+  CAIRO_INT_STATUS_INVALID_FORMAT                    =   16L,
+  CAIRO_INT_STATUS_INVALID_VISUAL                    =   17L,
+  CAIRO_INT_STATUS_FILE_NOT_FOUND                    =   18L,
+  CAIRO_INT_STATUS_INVALID_DASH                      =   19L,
+  CAIRO_INT_STATUS_INVALID_DSC_COMMENT               =   20L,
+  CAIRO_INT_STATUS_INVALID_INDEX                     =   21L,
+  CAIRO_INT_STATUS_CLIP_NOT_REPRESENTABLE            =   22L,
+  CAIRO_INT_STATUS_TEMP_FILE_ERROR                   =   23L,
+  CAIRO_INT_STATUS_INVALID_STRIDE                    =   24L,
+  CAIRO_INT_STATUS_FONT_TYPE_MISMATCH                =   25L,
+  CAIRO_INT_STATUS_USER_FONT_IMMUTABLE               =   26L,
+  CAIRO_INT_STATUS_USER_FONT_ERROR                   =   27L,
+  CAIRO_INT_STATUS_NEGATIVE_COUNT                    =   28L,
+  CAIRO_INT_STATUS_INVALID_CLUSTERS                  =   29L,
+  CAIRO_INT_STATUS_INVALID_SLANT                     =   30L,
+  CAIRO_INT_STATUS_INVALID_WEIGHT                    =   31L,
+  CAIRO_INT_STATUS_INVALID_SIZE                      =   32L,
+  CAIRO_INT_STATUS_USER_FONT_NOT_IMPLEMENTED         =   33L,
+  CAIRO_INT_STATUS_DEVICE_TYPE_MISMATCH              =   34L,
+  CAIRO_INT_STATUS_DEVICE_ERROR                      =   35L,
+  CAIRO_INT_STATUS_INVALID_MESH_CONSTRUCTION         =   36L,
+  CAIRO_INT_STATUS_DEVICE_FINISHED                   =   37L,
+  CAIRO_INT_STATUS_JBIG2_GLOBAL_MISSING              =   38L,
+  CAIRO_INT_STATUS_PNG_ERROR                         =   39L,
+  CAIRO_INT_STATUS_FREETYPE_ERROR                    =   40L,
+  CAIRO_INT_STATUS_WIN32_GDI_ERROR                   =   41L,
+  CAIRO_INT_STATUS_TAG_ERROR                         =   42L,
+  CAIRO_INT_STATUS_LAST_STATUS                       =   43L,
+  CAIRO_INT_STATUS_UNSUPPORTED                       =  100L,
+  CAIRO_INT_STATUS_DEGENERATE                        =  101L,
+  CAIRO_INT_STATUS_NOTHING_TO_DO                     =  102L,
+  CAIRO_INT_STATUS_FLATTEN_TRANSPARENCY              =  103L,
+  CAIRO_INT_STATUS_IMAGE_FALLBACK                    =  104L,
+  CAIRO_INT_STATUS_ANALYZE_RECORDING_SURFACE_PATTERN =  105L
+)

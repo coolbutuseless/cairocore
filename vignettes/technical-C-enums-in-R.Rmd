@@ -1,0 +1,109 @@
+---
+title: "Technical - C enums in R"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Technical - C enums in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>"
+)
+
+library(cairocore)
+```
+
+
+# Enums in C
+
+`enums` in C are a datastructure defining a mapping from human-readable variable 
+names to integer values.  For example, the
+`cairo_format_t` enum in the Cairo library defines the valid colour formats 
+that it knows how to deal with.
+
+Instead of having to remember that `2` stands for `CAIRO_FORMAT_A8` when writing C code,
+the programmer would just use `CAIRO_FORMAT_A8` and the compiler would automatically 
+replace this with `2` everywhere it appears.
+
+
+```
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// The definition of 'cairo_format_t' in the C header 'cairo.h'
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+typedef enum _cairo_format {
+    CAIRO_FORMAT_INVALID   = -1,
+    CAIRO_FORMAT_ARGB32    = 0,
+    CAIRO_FORMAT_RGB24     = 1,
+    CAIRO_FORMAT_A8        = 2,
+    CAIRO_FORMAT_A1        = 3,
+    CAIRO_FORMAT_RGB16_565 = 4,
+    CAIRO_FORMAT_RGB30     = 5,
+    CAIRO_FORMAT_RGB96F    = 6,
+    CAIRO_FORMAT_RGBA128F  = 7
+} cairo_format_t;
+```
+
+
+# Enums in R
+
+R doesn't have the concept of an enum, so in `cairocore` they are implemented 
+as named lists of integers.
+
+Each enum has documentation accessible via the standard help mechanism e.g. `?cairo_format_t`
+
+
+```{r}
+cairo_format_t
+```
+
+
+So to access an enum value by its name, you would write:
+
+```{r}
+cairo_format_t$CAIRO_FORMAT_A8
+```
+
+
+To look-up an enum name by its value there is a helper function `enum_lookup()` - 
+
+```{r}
+enum_lookup(cairo_format_t, 2)
+```
+
+
+
+
+
+# Compatability issues
+
+One downside of implementing enums like this in R is that there is little in the
+way of checking of values.
+
+
+In C, if you tried to use `CAIRO_FORMAT_A_DOES_NOT_EXIST` then the compiler would
+throw an error.
+
+In R, using `cairo_format_t$CAIRO_FORMAT_A_DOES_NOT_EXIST` will return a `NULL`, 
+which would then mean a likely error somewhere later in the program.
+
+
+# Possibilities
+
+To avoid the use of undefined enums, a new datatype/class could be defined which 
+was stricter about raising an error if a supplied enum name didn't exist.
+
+
+
+
+
+
+
+
+
+
+
+
+

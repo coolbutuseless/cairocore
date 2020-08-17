@@ -1,0 +1,78 @@
+---
+title: "Demo - Translating C code to R code"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Demo - Translating C code to R code}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cairocore)
+```
+
+# C Code for 'Cairo Hello world' example from FAQ
+
+This example was taken from the [CairoGraphics FAQ](https://www.cairographics.org/FAQ/)
+
+```
+#include <cairo.h>
+
+int main (int argc, char *argv[]) {
+  cairo_surface_t *surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 240, 80);
+  cairo_t *cr = cairo_create (surface);
+  
+  cairo_select_font_face (cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+  cairo_set_font_size (cr, 32.0);
+  cairo_set_source_rgb (cr, 0.0, 0.0, 1.0);
+  cairo_move_to (cr, 10.0, 50.0);
+  cairo_show_text (cr, "Hello, world");
+  
+  cairo_destroy (cr);
+  cairo_surface_write_to_png (surface, "hello.png");
+  cairo_surface_destroy (surface);
+  return 0;
+}
+```
+
+# Equivalent R Code for 'Cairo Hello world'
+
+* Remove type specification for assignment to variables, as this is not valid syntax in R
+* Remove trailing semi-colons.  Not essential to remove, but it looks nicer
+* prefix enums (like `CAIRO_FONT_SLANT_NORMAL`) with the name of the enum they 
+are contained in.  (there is a helper function called `enum_find()` to help do this)
+* `cairo_destroy()` and other memory management functions do nothing in R.  They 
+can still be in your code, they just don't do anything except print a warning message.
+
+* We can save the image to a PNG file, or we can view the surface directly by 
+  fetching the surface as a raster and plotting it
+
+```{r}
+library(cairocore)
+
+# enum_find('CAIRO_FORMAT_ARGB32')
+surface = cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, 240, 80)
+cr = cairo_create (surface)
+
+cairo_select_font_face (cr, "serif", cairo_font_slant_t$CAIRO_FONT_SLANT_NORMAL, cairo_font_weight_t$CAIRO_FONT_WEIGHT_BOLD)
+cairo_set_font_size (cr, 32.0)
+cairo_set_source_rgb (cr, 0.0, 0.0, 1.0)
+cairo_move_to (cr, 10.0, 50.0)
+cairo_show_text (cr, "Hello, world")
+
+# cairo_surface_write_to_png (surface, "hello.png")
+raster_out <- cairo_image_surface_get_raster(surface)
+plot(raster_out)
+```
+
+
+
+
+

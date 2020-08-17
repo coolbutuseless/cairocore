@@ -1,0 +1,110 @@
+---
+title: "Demo - Vectorised Functions"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Demo - Vectorised Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cairocore)
+```
+
+
+# C vs R
+
+### C is fast
+
+* C is fast
+* For loops are fast in C
+* Calling functions in C is fast
+
+
+### R is slower
+
+* R is slower than C 
+* For loops can be slow in R
+* Calling functions in R can be slow
+
+
+# Vectorised calls for avoiding for loops in R
+
+`cairocore` includes some functions for performing multiple operations with 
+a single call from R - looping happens within C, and not within R.
+
+The current vectorised functions are:
+
+* `cairo_arc_vec()` - draw lots of circles. A vectorised version of `cairo_arc()`
+* `cairo_rectangle_vec()` - draw lots of rectangles. A vectorised version of `cairo_rectangle()`
+* `cairo_segment_vec()` - draw lots of line segments. A vectorised version of `cairo_line_to()`
+* `cairo_polygon_vec()` - draw lots of polygons.  No equivalent in CairoGraphics
+
+
+If only drawing a few objects then the vectorised calls will not save you any 
+significant time.
+
+
+# Drawing 20000 rectangles at 30 frames-per-second
+
+The following code draws 20,000 rectangles on a 1000x1000 canvas with a single call. 
+This takes around 30ms - which translates to around 30 frames-per-second.
+
+Drawing the rectangles one-at-a-time in a for loop with calls to `cairo_rectangle()`
+is about about half the speed.  This speed difference probably isn't that critical
+for the majority of applications, but for realtime rendering with interactivity, 
+R will need every speed boost it can get.
+
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set up surface. Set to a white background. Turn off antialiasing
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+size    <- 1000
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, size, size);
+cr      <- cairo_create (surface);
+cairo_set_source_rgb(cr, 1, 1, 1)
+cairo_paint (cr);
+
+cairo_set_antialias(cr, cairo_antialias_t$CAIRO_ANTIALIAS_NONE)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Generate coords and colours for 20000 rectangles
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+N <- 20000
+
+x      <- runif(N, 1, size)
+y      <- runif(N, 1, size)
+width  <- runif(N, 1, size/10)
+height <- runif(N, 1, size/10)
+r      <- runif(N)
+g      <- runif(N)
+b      <- runif(N)
+a      <- runif(N)
+sr     <- runif(N)
+sg     <- runif(N)
+sb     <- runif(N)
+sa     <- runif(N)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw 20000 rectangles in a single call
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_rectangle_vec(cr, x, y, width, height, r, g, b, a = 1, sr, sg, sb, sa=0)
+
+raster_out <- cairo_image_surface_get_raster(surface)
+plot(raster_out, interpolate = FALSE)
+```
+
+
+
+
+
+

@@ -1,0 +1,162 @@
+---
+title: "Demo - Text Centering"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Demo - Text Centering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>"
+)
+```
+
+
+
+
+# Draw text at the mid point - "left-justified" by default.
+
+By default, the given (x,y) coordinates for text start at the lower left of text.
+
+
+```{r}
+library(cairocore)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a surface and a drawing context
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+width <- 240
+height <- 80
+
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, width, height);
+cr      <- cairo_create (surface);
+
+cairo_set_source_rgb (cr, 0.95, 0.95, 0.95)
+cairo_paint(cr)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Choose a font
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_select_font_face (
+  cr, 
+  family = "serif",
+  slant  = cairo_font_slant_t$CAIRO_FONT_SLANT_NORMAL,
+  weight = cairo_font_weight_t$CAIRO_FONT_WEIGHT_NORMAL
+)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set a font size and colour
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_font_size (cr, 32.0)
+cairo_set_source_rgb (cr, 0, 0, 0)
+
+my_text <- "Hello #RStats"
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# move to a location and compensate for the width of the text so that it
+# appears centred at that location
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_move_to (
+  cr,
+  width /2,
+  height/2
+)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Render the text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_show_text (cr, my_text)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Display the surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+raster_out <- cairo_image_surface_get_raster(surface)
+plot(raster_out, interpolate = FALSE)
+```
+
+
+
+# Centering text
+
+To center text in Cairo:
+
+1. Use `cairo_text_extents_t` to determine the display width of the text
+2. Offset the drawing location by half the text extents so that the given (x, y) 
+   rendering point is in the middle of the text
+
+
+
+```{r}
+library(cairocore)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a surface and a drawing context
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+width <- 240
+height <- 80
+
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, width, height);
+cr      <- cairo_create (surface);
+
+cairo_set_source_rgb (cr, 0.95, 0.95, 0.95)
+cairo_paint(cr)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Choose a font
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_select_font_face (
+  cr, 
+  family = "serif",
+  slant  = cairo_font_slant_t$CAIRO_FONT_SLANT_NORMAL,
+  weight = cairo_font_weight_t$CAIRO_FONT_WEIGHT_NORMAL
+)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set a font size and colour
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_font_size (cr, 32.0)
+cairo_set_source_rgb (cr, 0, 0, 0)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Calculate the width of the text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+my_text <- "Hello #RStats"
+
+te <- cairo_text_extents_t()
+cairo_text_extents (cr, my_text, te);
+te <- as.list(te)
+te
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# move to a location and compensate for the width of the text so that it
+# appears centred at that location
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_move_to (
+  cr,
+  width /2 - te$width  / 2 - te$x_bearing,
+  height/2 - te$height / 2 - te$y_bearing
+)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Render the text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_show_text (cr, my_text)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Display the surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+raster_out <- cairo_image_surface_get_raster(surface)
+plot(raster_out, interpolate = FALSE)
+```

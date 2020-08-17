@@ -1,0 +1,100 @@
+---
+title: "Technical - C pointers in R"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Technical - C pointers in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(cairocore)
+```
+
+
+
+# Pointers in C
+
+Pointers in C are memory addresses which *point* to the location of data.
+
+This data is created as the program runs, and it is usually the users 
+responsibility to release this memory.
+
+Issues will arise if more than 1 part of the program assumes it has responsibility 
+for freeing that memory.
+
+The following C code creates a pointer to a `cairo_rectangle_t` struct.
+
+
+```
+cairo_rectangle_t *my_rect = (cairo_rectangle_t *)calloc(1, sizeof(cairo_rectangle_t));
+```
+
+
+
+
+# Pointers in R
+
+In R, pointers which have been allocated within C are represented as *External Pointers*.
+
+These are opaque objects which point to a memory location, but don't show any interior
+details when viewed in R.
+
+The following R code in `cairocore` creates a pointer to a rectangle object
+
+
+```{r}
+my_rect <- cairo_rectangle_t(x = 10, y = 10, width = 100, height = 200)
+
+my_rect
+typeof(my_rect)
+class(my_rect)
+```
+
+
+This external pointer can then be used when calling other functions within 
+`cairocore` which expect a `cairo_rectangle_t *` as an argument.
+
+
+# Freeing the memory associated with pointers
+
+In C, the programmer is tasked with manually releasing any memory that was allocated
+and assigned to a pointer - usually using the function `free()`.
+
+However, as R is a *garbage collected* language, there's no concept which is equivalent 
+to calling `free()` as would be done in C.
+
+So there is a mismatch between how R and C want to deal with releasing memory when they're 
+finished using it:  C wants the programmer to manually call a function to release the memory,
+where R just lets the object fall out of scope and be garbage collected.
+
+The approach taken to resolve this mismatch in `cairocore` is:
+
+1. Pointers which are returned to R have *finalizer* functions attached.  Thus, when they
+   fall out of scope and are removed by the garbage collector, the finalizer function
+   will be called by the garbage collector to release the memory.
+2. All manual methods from the original Cairo C library which are related to releasing the memory 
+   are not available from R.  
+   
+   
+These two steps ensure that R users cannot free the memory behind a pointer before the
+R runtime has finished with it.
+  
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,98 @@
+---
+title: "Demo - Drawing on Arrays in Memory"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Demo - Drawing on Arrays in Memory}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Example - taking an array in R, drawing on it, returning it to R
+
+```{r setup}
+library(cairocore)
+library(pixelweaver)
+```
+
+
+
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Let's grab the volcano
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arr <- (t(volcano) - min(volcano))/(max(volcano) - min(volcano))
+plot(as.raster(arr), interpolate = FALSE)
+```
+
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Initialise a surface from the array
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+surface <- cairo_image_surface_create_from_array(arr)
+cr      <- cairo_create(surface)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw a circle on the cairo surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_arc(cr, 70, 15, 10, 0, 2*pi)
+cairo_set_line_width(cr, 3);
+cairo_set_source_rgba(cr, 255/255, 99/255, 71/255, 0.8)
+cairo_stroke(cr)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Write some text on the cairo surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_select_font_face (cr, "serif", cairo_font_slant_t$CAIRO_FONT_SLANT_NORMAL, cairo_font_weight_t$CAIRO_FONT_WEIGHT_BOLD)
+cairo_set_font_size (cr, 17.0)
+cairo_set_source_rgb (cr, 0.2, 0.6, 1.0) 
+cairo_move_to (cr, 2.0, 56.0)
+cairo_show_text (cr, "{cairocore}")
+```
+
+
+## Fetch the surface as an array
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Fetch the drawing surface as an array
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arr_out <- cairo_image_surface_get_array(surface=surface, nchannel = 3)
+plot(as.raster(arr_out), interpolate = FALSE)
+```
+
+
+## Fetch the surface as a raster
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Fetch the drawing surface as a raster
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+raster_out <- cairo_image_surface_get_raster(surface=surface)
+plot(raster_out, interpolate = FALSE)
+```
+
+
+## Output the created surface to PNG
+
+```{r eval = FALSE}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Save the drawin g surface to PNG
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairocore::cairo_surface_write_to_png(surface, "output.png")
+```
+
+
+
+
+
+

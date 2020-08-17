@@ -1,0 +1,247 @@
+---
+title: "Demo - Using Transforms to Flip Y-axis"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Demo - Using Transforms to Flip Y-axis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cairocore)
+```
+
+
+# Cairo surface origin is usually top left
+
+On a default cairo surface, the origin in the top left corner with the y-axis
+increasing *down* the page.
+
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a simple surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+w <- 500
+h <- 500
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, w, h);
+cr      <- cairo_create (surface);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Clear the screen to be green
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 0.6, 0.7, 0.6)
+cairo_paint(cr)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw 2 squares
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 1, 0, 0)
+cairo_rectangle(cr, 0, 0, 20, 20)
+cairo_fill(cr)
+
+cairo_set_source_rgb(cr, 0, 0, 1)
+cairo_rectangle(cr, 30, 30, 40, 40)
+cairo_fill(cr)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# plot the surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+plot(cairo_image_surface_get_raster(surface))
+```
+
+
+
+# Set transformation on surface so origin is in bottom left
+
+By applying a transform to the canvas we can set the origin to be the bottom left, 
+with the *y* axis increasting up the page.
+
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a simple surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+w <- 500
+h <- 500
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, w, h);
+cr      <- cairo_create (surface);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Flip the y axis
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mat <- cairo_matrix_t(1, 0, 0, -1, 0, h)
+cairo_set_matrix(cr, mat)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Clear the screen to be green
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 0.6, 0.7, 0.6)
+cairo_paint(cr)
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw 2 squares
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 1, 0, 0)
+cairo_rectangle(cr, 0, 0, 20, 20)
+cairo_fill(cr)
+
+cairo_set_source_rgb(cr, 0, 0, 1)
+cairo_rectangle(cr, 30, 30, 40, 40)
+cairo_fill(cr)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# plot the surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+plot(cairo_image_surface_get_raster(surface))
+```
+
+
+# Flipping Y axis applies to many things, but not the actual strokes of a font
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a simple surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+w <- 500
+h <- 500
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, w, h);
+cr      <- cairo_create (surface);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Flip the y axis
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mat <- cairo_matrix_t(1, 0, 0, -1, 0, h)
+cairo_set_matrix(cr, mat)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Clear the screen to be green
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 0.6, 0.7, 0.6)
+cairo_paint(cr)
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw 2 squares
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 1, 0, 0)
+cairo_rectangle(cr, 0, 0, 20, 20)
+cairo_fill(cr)
+
+cairo_set_source_rgb(cr, 0, 0, 1)
+cairo_rectangle(cr, 30, 30, 40, 40)
+cairo_fill(cr)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set up some text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_select_font_face (cr, "serif",
+                        cairo_font_slant_t$CAIRO_FONT_SLANT_NORMAL,
+                        cairo_font_weight_t$CAIRO_FONT_WEIGHT_BOLD);
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Invert the text to match origin at lower-left
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+font_size <- 70
+cairo_set_font_size(cr, font_size)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw the text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+text_message <- "Hello #RStats"
+
+cairo_set_source_rgb (cr, 0.0, 0.0, 1.0);
+cairo_move_to (cr, 20, 200);
+cairo_show_text (cr, text_message)
+
+
+plot(cairo_image_surface_get_raster(surface))
+
+```
+
+
+
+# Flipping Y for canvas and text
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a simple surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+w <- 500
+h <- 500
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, w, h);
+cr      <- cairo_create (surface);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Flip the y axis
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mat <- cairo_matrix_t(1, 0, 0, -1, 0, h)
+cairo_set_matrix(cr, mat)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Clear the screen to be green
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 0.6, 0.7, 0.6)
+cairo_paint(cr)
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw 2 squares
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 1, 0, 0)
+cairo_rectangle(cr, 0, 0, 20, 20)
+cairo_fill(cr)
+
+cairo_set_source_rgb(cr, 0, 0, 1)
+cairo_rectangle(cr, 30, 30, 40, 40)
+cairo_fill(cr)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set up some text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_select_font_face (cr, "serif",
+                        cairo_font_slant_t$CAIRO_FONT_SLANT_NORMAL,
+                        cairo_font_weight_t$CAIRO_FONT_WEIGHT_BOLD);
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Invert the text to match origin at lower-left
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+font_size <- 70
+tmat <- cairo_matrix_t(font_size, 0, 0, -font_size, 0, 0)
+cairo_set_font_matrix(cr, tmat)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Draw the text
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+text_message <- "Hello #RStats"
+
+cairo_set_source_rgb (cr, 0.0, 0.0, 1.0);
+cairo_move_to (cr, 20, 200);
+cairo_show_text (cr, text_message)
+
+
+plot(cairo_image_surface_get_raster(surface))
+
+```
+

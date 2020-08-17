@@ -1,0 +1,119 @@
+---
+title: "Demo - Creating and Using Patterns"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Demo - Creating and Using Patterns}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cairocore)
+```
+
+
+## Create a pattern gradient across an entire canvas
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set up a surface and a Cairo context (cr)
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+width   <- 600
+height  <- 400
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, width, height);
+cr      <- cairo_create (surface);
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Clear the surface to off-white
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 0.9, 0.9, 0.9) 
+cairo_paint(cr);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set the current colour and linewidth
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_set_source_rgb(cr, 0.6, 0.6, 0.6);
+cairo_set_line_width(cr, 1);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a pattern
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+pattern1 <- cairo_pattern_create_linear(0, 0, width, height);
+cairo_pattern_add_color_stop_rgb(pattern1, 0.1, 0, 0, 0);
+cairo_pattern_add_color_stop_rgb(pattern1, 0.5, 1, 0, 1);
+cairo_pattern_add_color_stop_rgb(pattern1, 0.9, 0, 0, 1);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create a rectangle
+# Set the source to be the pattern we just defined
+# Fill with that pattern
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cairo_rectangle(cr, 0, 0, width, height);
+cairo_set_source(cr, pattern1);
+cairo_fill(cr);
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Output the surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+raster_out <- cairo_image_surface_get_raster(surface=surface, nchannel = 3)
+plot(raster_out, interpolate = FALSE)
+```
+
+
+
+
+## Use a pattern to fill other shapes
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Set up a surface and a Cairo context (cr)
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+width   <- 600
+height  <- 400
+surface <- cairo_image_surface_create (cairo_format_t$CAIRO_FORMAT_ARGB32, width, height);
+cr      <- cairo_create (surface);
+cairo_set_source_rgb(cr, 0.9, 0.9, 0.9) 
+cairo_paint(cr);
+
+
+cairo_set_source(cr, pattern1);
+for (x in seq(1, width+1, 50)) {
+  for (y in seq(1, height+1, 50)) {
+    cairo_arc(cr, x, y, 20, 0, 2*pi)
+    cairo_fill(cr);
+  }
+}
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Output the surface
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+raster_out <- cairo_image_surface_get_raster(surface=surface, nchannel = 3)
+plot(raster_out, interpolate = FALSE)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
