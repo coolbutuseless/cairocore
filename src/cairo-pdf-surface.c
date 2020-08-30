@@ -36,7 +36,7 @@ SEXP cairo_pdf_surface_create_(SEXP filename_, SEXP width_in_points_, SEXP heigh
 // void cairo_pdf_surface_restrict_to_version (cairo_surface_t *surface, cairo_pdf_version_t version)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pdf_surface_restrict_to_version_(SEXP surface_, SEXP version_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int version = isReal(version_) ? (int)REAL(version_)[0] : (int)INTEGER(version_)[0];
   cairo_pdf_surface_restrict_to_version(surface, version);
@@ -60,7 +60,7 @@ SEXP cairo_pdf_version_to_string_(SEXP version_)  {
 // void cairo_pdf_surface_set_size (cairo_surface_t *surface, double width_in_points, double height_in_points)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pdf_surface_set_size_(SEXP surface_, SEXP width_in_points_, SEXP height_in_points_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   double width_in_points = isInteger(width_in_points_) ? (double)INTEGER(width_in_points_)[0] : (double)REAL(width_in_points_)[0];
   double height_in_points = isInteger(height_in_points_) ? (double)INTEGER(height_in_points_)[0] : (double)REAL(height_in_points_)[0];
@@ -73,7 +73,7 @@ SEXP cairo_pdf_surface_set_size_(SEXP surface_, SEXP width_in_points_, SEXP heig
 // int cairo_pdf_surface_add_outline (cairo_surface_t *surface, int parent_id, const char *utf8, const char *link_attribs, cairo_pdf_outline_flags_t flags)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pdf_surface_add_outline_(SEXP surface_, SEXP parent_id_, SEXP utf8_, SEXP link_attribs_, SEXP flags_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int parent_id = isReal(parent_id_) ? (int)REAL(parent_id_)[0] : (int)INTEGER(parent_id_)[0];
   char * utf8 = (char *)CHAR(asChar(utf8_));
@@ -90,7 +90,7 @@ SEXP cairo_pdf_surface_add_outline_(SEXP surface_, SEXP parent_id_, SEXP utf8_, 
 // void cairo_pdf_surface_set_metadata (cairo_surface_t *surface, cairo_pdf_metadata_t metadata, const char *utf8)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pdf_surface_set_metadata_(SEXP surface_, SEXP metadata_, SEXP utf8_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int metadata = isReal(metadata_) ? (int)REAL(metadata_)[0] : (int)INTEGER(metadata_)[0];
   char * utf8 = (char *)CHAR(asChar(utf8_));
@@ -103,7 +103,7 @@ SEXP cairo_pdf_surface_set_metadata_(SEXP surface_, SEXP metadata_, SEXP utf8_) 
 // void cairo_pdf_surface_set_page_label (cairo_surface_t *surface, const char *utf8)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pdf_surface_set_page_label_(SEXP surface_, SEXP utf8_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   char * utf8 = (char *)CHAR(asChar(utf8_));
   cairo_pdf_surface_set_page_label(surface, utf8);
@@ -115,7 +115,7 @@ SEXP cairo_pdf_surface_set_page_label_(SEXP surface_, SEXP utf8_)  {
 // void cairo_pdf_surface_set_thumbnail_size (cairo_surface_t *surface, int width, int height)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pdf_surface_set_thumbnail_size_(SEXP surface_, SEXP width_, SEXP height_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int width = isReal(width_) ? (int)REAL(width_)[0] : (int)INTEGER(width_)[0];
   int height = isReal(height_) ? (int)REAL(height_)[0] : (int)INTEGER(height_)[0];

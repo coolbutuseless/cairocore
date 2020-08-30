@@ -20,7 +20,7 @@
 // void cairo_surface_finish (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_surface_finish_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   cairo_surface_finish(surface);
   return R_NilValue;
@@ -31,7 +31,7 @@ SEXP cairo_surface_finish_(SEXP surface_)  {
 // void cairo_surface_flush (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_surface_flush_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   cairo_surface_flush(surface);
   return R_NilValue;

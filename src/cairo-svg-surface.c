@@ -36,7 +36,7 @@ SEXP cairo_svg_surface_create_(SEXP filename_, SEXP width_, SEXP height_)  {
 // void cairo_svg_surface_restrict_to_version (cairo_surface_t *surface, cairo_svg_version_t version)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_svg_surface_restrict_to_version_(SEXP surface_, SEXP version_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int version = isReal(version_) ? (int)REAL(version_)[0] : (int)INTEGER(version_)[0];
   cairo_svg_surface_restrict_to_version(surface, version);
@@ -60,7 +60,7 @@ SEXP cairo_svg_version_to_string_(SEXP version_)  {
 // void cairo_svg_surface_set_document_unit (cairo_surface_t *surface, cairo_svg_unit_t unit)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_svg_surface_set_document_unit_(SEXP surface_, SEXP unit_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int unit = isReal(unit_) ? (int)REAL(unit_)[0] : (int)INTEGER(unit_)[0];
   cairo_svg_surface_set_document_unit(surface, unit);
@@ -72,7 +72,7 @@ SEXP cairo_svg_surface_set_document_unit_(SEXP surface_, SEXP unit_)  {
 // cairo_svg_unit_t cairo_svg_surface_get_document_unit (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_svg_surface_get_document_unit_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int result = cairo_svg_surface_get_document_unit(surface);
   SEXP result_ = PROTECT(ScalarInteger(result));

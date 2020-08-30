@@ -20,7 +20,7 @@
 // void cairo_matrix_init (cairo_matrix_t *matrix, double xx, double yx, double xy, double yy, double x0, double y0)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_init_(SEXP matrix_, SEXP xx_, SEXP yx_, SEXP xy_, SEXP yy_, SEXP x0_, SEXP y0_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double xx = isInteger(xx_) ? (double)INTEGER(xx_)[0] : (double)REAL(xx_)[0];
   double yx = isInteger(yx_) ? (double)INTEGER(yx_)[0] : (double)REAL(yx_)[0];
@@ -37,7 +37,7 @@ SEXP cairo_matrix_init_(SEXP matrix_, SEXP xx_, SEXP yx_, SEXP xy_, SEXP yy_, SE
 // void cairo_matrix_init_translate (cairo_matrix_t *matrix, double tx, double ty)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_init_translate_(SEXP matrix_, SEXP tx_, SEXP ty_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double tx = isInteger(tx_) ? (double)INTEGER(tx_)[0] : (double)REAL(tx_)[0];
   double ty = isInteger(ty_) ? (double)INTEGER(ty_)[0] : (double)REAL(ty_)[0];
@@ -50,7 +50,7 @@ SEXP cairo_matrix_init_translate_(SEXP matrix_, SEXP tx_, SEXP ty_)  {
 // void cairo_matrix_translate (cairo_matrix_t *matrix, double tx, double ty)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_translate_(SEXP matrix_, SEXP tx_, SEXP ty_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double tx = isInteger(tx_) ? (double)INTEGER(tx_)[0] : (double)REAL(tx_)[0];
   double ty = isInteger(ty_) ? (double)INTEGER(ty_)[0] : (double)REAL(ty_)[0];
@@ -63,7 +63,7 @@ SEXP cairo_matrix_translate_(SEXP matrix_, SEXP tx_, SEXP ty_)  {
 // void cairo_matrix_init_scale (cairo_matrix_t *matrix, double sx, double sy)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_init_scale_(SEXP matrix_, SEXP sx_, SEXP sy_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double sx = isInteger(sx_) ? (double)INTEGER(sx_)[0] : (double)REAL(sx_)[0];
   double sy = isInteger(sy_) ? (double)INTEGER(sy_)[0] : (double)REAL(sy_)[0];
@@ -76,7 +76,7 @@ SEXP cairo_matrix_init_scale_(SEXP matrix_, SEXP sx_, SEXP sy_)  {
 // void cairo_matrix_scale (cairo_matrix_t *matrix, double sx, double sy)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_scale_(SEXP matrix_, SEXP sx_, SEXP sy_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double sx = isInteger(sx_) ? (double)INTEGER(sx_)[0] : (double)REAL(sx_)[0];
   double sy = isInteger(sy_) ? (double)INTEGER(sy_)[0] : (double)REAL(sy_)[0];
@@ -89,7 +89,7 @@ SEXP cairo_matrix_scale_(SEXP matrix_, SEXP sx_, SEXP sy_)  {
 // void cairo_matrix_init_rotate (cairo_matrix_t *matrix, double radians)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_init_rotate_(SEXP matrix_, SEXP radians_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double radians = isInteger(radians_) ? (double)INTEGER(radians_)[0] : (double)REAL(radians_)[0];
   cairo_matrix_init_rotate(matrix, radians);
@@ -101,7 +101,7 @@ SEXP cairo_matrix_init_rotate_(SEXP matrix_, SEXP radians_)  {
 // void cairo_matrix_rotate (cairo_matrix_t *matrix, double radians)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_rotate_(SEXP matrix_, SEXP radians_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double radians = isInteger(radians_) ? (double)INTEGER(radians_)[0] : (double)REAL(radians_)[0];
   cairo_matrix_rotate(matrix, radians);
@@ -113,11 +113,11 @@ SEXP cairo_matrix_rotate_(SEXP matrix_, SEXP radians_)  {
 // void cairo_matrix_multiply (cairo_matrix_t *result, const cairo_matrix_t *a, const cairo_matrix_t *b)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_multiply_(SEXP result_, SEXP a_, SEXP b_)  {
-  cairo_matrix_t *result = isNull(result_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(result_);
+  cairo_matrix_t *result = TYPEOF(result_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(result_);
   if (result == NULL) error("'cairo_matrix_t * result' pointer is invalid/NULL");
-  cairo_matrix_t *a = isNull(a_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(a_);
+  cairo_matrix_t *a = TYPEOF(a_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(a_);
   if (a == NULL) error("'cairo_matrix_t * a' pointer is invalid/NULL");
-  cairo_matrix_t *b = isNull(b_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(b_);
+  cairo_matrix_t *b = TYPEOF(b_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(b_);
   if (b == NULL) error("'cairo_matrix_t * b' pointer is invalid/NULL");
   cairo_matrix_multiply(result, a, b);
   return R_NilValue;
@@ -128,7 +128,7 @@ SEXP cairo_matrix_multiply_(SEXP result_, SEXP a_, SEXP b_)  {
 // void cairo_matrix_transform_distance (const cairo_matrix_t *matrix, double *dx, double *dy)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_transform_distance_(SEXP matrix_, SEXP dx_, SEXP dy_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double * dx = (double *)REAL(dx_);
   double * dy = (double *)REAL(dy_);
@@ -141,7 +141,7 @@ SEXP cairo_matrix_transform_distance_(SEXP matrix_, SEXP dx_, SEXP dy_)  {
 // void cairo_matrix_transform_point (const cairo_matrix_t *matrix, double *x, double *y)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_transform_point_(SEXP matrix_, SEXP x_, SEXP y_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   double * x = (double *)REAL(x_);
   double * y = (double *)REAL(y_);
@@ -154,7 +154,7 @@ SEXP cairo_matrix_transform_point_(SEXP matrix_, SEXP x_, SEXP y_)  {
 // cairo_status_t cairo_matrix_invert (cairo_matrix_t *matrix)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_matrix_invert_(SEXP matrix_)  {
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   int result = cairo_matrix_invert(matrix);
   SEXP result_ = PROTECT(ScalarInteger(result));

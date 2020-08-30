@@ -20,7 +20,7 @@
 // cairo_font_type_t cairo_font_face_get_type (cairo_font_face_t *font_face)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_font_face_get_type_(SEXP font_face_)  {
-  cairo_font_face_t *font_face = isNull(font_face_) ? NULL : (cairo_font_face_t *)R_ExternalPtrAddr(font_face_);
+  cairo_font_face_t *font_face = TYPEOF(font_face_) != EXTPTRSXP ? NULL : (cairo_font_face_t *)R_ExternalPtrAddr(font_face_);
   if (font_face == NULL) error("'cairo_font_face_t * font_face' pointer is invalid/NULL");
   int result = cairo_font_face_get_type(font_face);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -33,7 +33,7 @@ SEXP cairo_font_face_get_type_(SEXP font_face_)  {
 // cairo_status_t cairo_font_face_status (cairo_font_face_t *font_face)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_font_face_status_(SEXP font_face_)  {
-  cairo_font_face_t *font_face = isNull(font_face_) ? NULL : (cairo_font_face_t *)R_ExternalPtrAddr(font_face_);
+  cairo_font_face_t *font_face = TYPEOF(font_face_) != EXTPTRSXP ? NULL : (cairo_font_face_t *)R_ExternalPtrAddr(font_face_);
   if (font_face == NULL) error("'cairo_font_face_t * font_face' pointer is invalid/NULL");
   int result = cairo_font_face_status(font_face);
   SEXP result_ = PROTECT(ScalarInteger(result));

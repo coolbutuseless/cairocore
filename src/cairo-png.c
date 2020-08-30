@@ -20,7 +20,7 @@
 // cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface, const char *filename)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_surface_write_to_png_(SEXP surface_, SEXP filename_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   char * filename = (char *)CHAR(asChar(filename_));
   int result = cairo_surface_write_to_png(surface, filename);

@@ -67,7 +67,7 @@ SEXP cairo_image_surface_create_for_data_(SEXP data_, SEXP format_, SEXP width_,
 // unsigned char * cairo_image_surface_get_data (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_image_surface_get_data_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   unsigned char * result = cairo_image_surface_get_data(surface);
   SEXP result_ = PROTECT(R_MakeExternalPtr(result, R_NilValue, R_NilValue));
@@ -81,7 +81,7 @@ SEXP cairo_image_surface_get_data_(SEXP surface_)  {
 // cairo_format_t cairo_image_surface_get_format (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_image_surface_get_format_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int result = cairo_image_surface_get_format(surface);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -94,7 +94,7 @@ SEXP cairo_image_surface_get_format_(SEXP surface_)  {
 // int cairo_image_surface_get_width (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_image_surface_get_width_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int result = cairo_image_surface_get_width(surface);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -107,7 +107,7 @@ SEXP cairo_image_surface_get_width_(SEXP surface_)  {
 // int cairo_image_surface_get_height (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_image_surface_get_height_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int result = cairo_image_surface_get_height(surface);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -120,7 +120,7 @@ SEXP cairo_image_surface_get_height_(SEXP surface_)  {
 // int cairo_image_surface_get_stride (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_image_surface_get_stride_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   int result = cairo_image_surface_get_stride(surface);
   SEXP result_ = PROTECT(ScalarInteger(result));

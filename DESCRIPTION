@@ -1,7 +1,7 @@
 Package: cairocore
 Type: Package
 Title: Low-Level Cairo Bindings
-Version: 0.1.0
+Version: 0.1.1
 Author: mikefc
 Maintainer: mikefc <mikefc@coolbutuseless.com>
 Description: Raw, low-level bindings to the Cairo graphics library.

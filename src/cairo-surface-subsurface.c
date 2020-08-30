@@ -20,7 +20,7 @@
 // cairo_surface_t * cairo_surface_create_for_rectangle (cairo_surface_t *target, double x, double y, double width, double height)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_surface_create_for_rectangle_(SEXP target_, SEXP x_, SEXP y_, SEXP width_, SEXP height_)  {
-  cairo_surface_t *target = isNull(target_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(target_);
+  cairo_surface_t *target = TYPEOF(target_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(target_);
   if (target == NULL) error("'cairo_surface_t * target' pointer is invalid/NULL");
   double x = isInteger(x_) ? (double)INTEGER(x_)[0] : (double)REAL(x_)[0];
   double y = isInteger(y_) ? (double)INTEGER(y_)[0] : (double)REAL(y_)[0];

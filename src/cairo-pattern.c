@@ -53,7 +53,7 @@ SEXP cairo_pattern_create_rgba_(SEXP red_, SEXP green_, SEXP blue_, SEXP alpha_)
 // cairo_pattern_t * cairo_pattern_create_for_surface (cairo_surface_t *surface)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_create_for_surface_(SEXP surface_)  {
-  cairo_surface_t *surface = isNull(surface_) ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
+  cairo_surface_t *surface = TYPEOF(surface_) != EXTPTRSXP ? NULL : (cairo_surface_t *)R_ExternalPtrAddr(surface_);
   if (surface == NULL) error("'cairo_surface_t * surface' pointer is invalid/NULL");
   cairo_pattern_t * result = cairo_pattern_create_for_surface(surface);
   SEXP result_ = PROTECT(R_MakeExternalPtr(result, R_NilValue, R_NilValue));
@@ -117,7 +117,7 @@ SEXP cairo_pattern_create_mesh_(void)  {
 // cairo_pattern_type_t cairo_pattern_get_type (cairo_pattern_t *pattern)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_type_(SEXP pattern_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int result = cairo_pattern_get_type(pattern);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -130,7 +130,7 @@ SEXP cairo_pattern_get_type_(SEXP pattern_)  {
 // cairo_status_t cairo_pattern_status (cairo_pattern_t *pattern)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_status_(SEXP pattern_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int result = cairo_pattern_status(pattern);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -143,7 +143,7 @@ SEXP cairo_pattern_status_(SEXP pattern_)  {
 // void cairo_mesh_pattern_begin_patch (cairo_pattern_t *pattern)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_begin_patch_(SEXP pattern_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   cairo_mesh_pattern_begin_patch(pattern);
   return R_NilValue;
@@ -154,7 +154,7 @@ SEXP cairo_mesh_pattern_begin_patch_(SEXP pattern_)  {
 // void cairo_mesh_pattern_end_patch (cairo_pattern_t *pattern)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_end_patch_(SEXP pattern_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   cairo_mesh_pattern_end_patch(pattern);
   return R_NilValue;
@@ -165,7 +165,7 @@ SEXP cairo_mesh_pattern_end_patch_(SEXP pattern_)  {
 // void cairo_mesh_pattern_curve_to (cairo_pattern_t *pattern, double x1, double y1, double x2, double y2, double x3, double y3)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_curve_to_(SEXP pattern_, SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_, SEXP x3_, SEXP y3_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double x1 = isInteger(x1_) ? (double)INTEGER(x1_)[0] : (double)REAL(x1_)[0];
   double y1 = isInteger(y1_) ? (double)INTEGER(y1_)[0] : (double)REAL(y1_)[0];
@@ -182,7 +182,7 @@ SEXP cairo_mesh_pattern_curve_to_(SEXP pattern_, SEXP x1_, SEXP y1_, SEXP x2_, S
 // void cairo_mesh_pattern_line_to (cairo_pattern_t *pattern, double x, double y)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_line_to_(SEXP pattern_, SEXP x_, SEXP y_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double x = isInteger(x_) ? (double)INTEGER(x_)[0] : (double)REAL(x_)[0];
   double y = isInteger(y_) ? (double)INTEGER(y_)[0] : (double)REAL(y_)[0];
@@ -195,7 +195,7 @@ SEXP cairo_mesh_pattern_line_to_(SEXP pattern_, SEXP x_, SEXP y_)  {
 // void cairo_mesh_pattern_move_to (cairo_pattern_t *pattern, double x, double y)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_move_to_(SEXP pattern_, SEXP x_, SEXP y_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double x = isInteger(x_) ? (double)INTEGER(x_)[0] : (double)REAL(x_)[0];
   double y = isInteger(y_) ? (double)INTEGER(y_)[0] : (double)REAL(y_)[0];
@@ -208,7 +208,7 @@ SEXP cairo_mesh_pattern_move_to_(SEXP pattern_, SEXP x_, SEXP y_)  {
 // void cairo_mesh_pattern_set_control_point (cairo_pattern_t *pattern, unsigned int point_num, double x, double y)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_set_control_point_(SEXP pattern_, SEXP point_num_, SEXP x_, SEXP y_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   unsigned int point_num = isReal(point_num_) ? (unsigned int)REAL(point_num_)[0] : (unsigned int)INTEGER(point_num_)[0];
   double x = isInteger(x_) ? (double)INTEGER(x_)[0] : (double)REAL(x_)[0];
@@ -222,7 +222,7 @@ SEXP cairo_mesh_pattern_set_control_point_(SEXP pattern_, SEXP point_num_, SEXP 
 // void cairo_mesh_pattern_set_corner_color_rgb (cairo_pattern_t *pattern, unsigned int corner_num, double red, double green, double blue)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_set_corner_color_rgb_(SEXP pattern_, SEXP corner_num_, SEXP red_, SEXP green_, SEXP blue_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   unsigned int corner_num = isReal(corner_num_) ? (unsigned int)REAL(corner_num_)[0] : (unsigned int)INTEGER(corner_num_)[0];
   double red = isInteger(red_) ? (double)INTEGER(red_)[0] : (double)REAL(red_)[0];
@@ -237,7 +237,7 @@ SEXP cairo_mesh_pattern_set_corner_color_rgb_(SEXP pattern_, SEXP corner_num_, S
 // void cairo_mesh_pattern_set_corner_color_rgba (cairo_pattern_t *pattern, unsigned int corner_num, double red, double green, double blue, double alpha)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_set_corner_color_rgba_(SEXP pattern_, SEXP corner_num_, SEXP red_, SEXP green_, SEXP blue_, SEXP alpha_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   unsigned int corner_num = isReal(corner_num_) ? (unsigned int)REAL(corner_num_)[0] : (unsigned int)INTEGER(corner_num_)[0];
   double red = isInteger(red_) ? (double)INTEGER(red_)[0] : (double)REAL(red_)[0];
@@ -253,7 +253,7 @@ SEXP cairo_mesh_pattern_set_corner_color_rgba_(SEXP pattern_, SEXP corner_num_, 
 // void cairo_pattern_add_color_stop_rgb (cairo_pattern_t *pattern, double offset, double red, double green, double blue)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_add_color_stop_rgb_(SEXP pattern_, SEXP offset_, SEXP red_, SEXP green_, SEXP blue_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double offset = isInteger(offset_) ? (double)INTEGER(offset_)[0] : (double)REAL(offset_)[0];
   double red = isInteger(red_) ? (double)INTEGER(red_)[0] : (double)REAL(red_)[0];
@@ -268,7 +268,7 @@ SEXP cairo_pattern_add_color_stop_rgb_(SEXP pattern_, SEXP offset_, SEXP red_, S
 // void cairo_pattern_add_color_stop_rgba (cairo_pattern_t *pattern, double offset, double red, double green, double blue, double alpha)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_add_color_stop_rgba_(SEXP pattern_, SEXP offset_, SEXP red_, SEXP green_, SEXP blue_, SEXP alpha_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double offset = isInteger(offset_) ? (double)INTEGER(offset_)[0] : (double)REAL(offset_)[0];
   double red = isInteger(red_) ? (double)INTEGER(red_)[0] : (double)REAL(red_)[0];
@@ -284,9 +284,9 @@ SEXP cairo_pattern_add_color_stop_rgba_(SEXP pattern_, SEXP offset_, SEXP red_, 
 // void cairo_pattern_set_matrix (cairo_pattern_t *pattern, const cairo_matrix_t *matrix)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_set_matrix_(SEXP pattern_, SEXP matrix_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   cairo_pattern_set_matrix(pattern, matrix);
   return R_NilValue;
@@ -297,9 +297,9 @@ SEXP cairo_pattern_set_matrix_(SEXP pattern_, SEXP matrix_)  {
 // void cairo_pattern_get_matrix (cairo_pattern_t *pattern, cairo_matrix_t *matrix)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_matrix_(SEXP pattern_, SEXP matrix_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
-  cairo_matrix_t *matrix = isNull(matrix_) ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
+  cairo_matrix_t *matrix = TYPEOF(matrix_) != EXTPTRSXP ? NULL : (cairo_matrix_t *)R_ExternalPtrAddr(matrix_);
   if (matrix == NULL) error("'cairo_matrix_t * matrix' pointer is invalid/NULL");
   cairo_pattern_get_matrix(pattern, matrix);
   return R_NilValue;
@@ -310,7 +310,7 @@ SEXP cairo_pattern_get_matrix_(SEXP pattern_, SEXP matrix_)  {
 // void cairo_pattern_set_filter (cairo_pattern_t *pattern, cairo_filter_t filter)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_set_filter_(SEXP pattern_, SEXP filter_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int filter = isReal(filter_) ? (int)REAL(filter_)[0] : (int)INTEGER(filter_)[0];
   cairo_pattern_set_filter(pattern, filter);
@@ -322,7 +322,7 @@ SEXP cairo_pattern_set_filter_(SEXP pattern_, SEXP filter_)  {
 // cairo_filter_t cairo_pattern_get_filter (cairo_pattern_t *pattern)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_filter_(SEXP pattern_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int result = cairo_pattern_get_filter(pattern);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -335,7 +335,7 @@ SEXP cairo_pattern_get_filter_(SEXP pattern_)  {
 // void cairo_pattern_set_extend (cairo_pattern_t *pattern, cairo_extend_t extend)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_set_extend_(SEXP pattern_, SEXP extend_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int extend = isReal(extend_) ? (int)REAL(extend_)[0] : (int)INTEGER(extend_)[0];
   cairo_pattern_set_extend(pattern, extend);
@@ -347,7 +347,7 @@ SEXP cairo_pattern_set_extend_(SEXP pattern_, SEXP extend_)  {
 // cairo_extend_t cairo_pattern_get_extend (cairo_pattern_t *pattern)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_extend_(SEXP pattern_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int result = cairo_pattern_get_extend(pattern);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -360,7 +360,7 @@ SEXP cairo_pattern_get_extend_(SEXP pattern_)  {
 // cairo_status_t cairo_pattern_get_rgba (cairo_pattern_t *pattern, double *red, double *green, double *blue, double *alpha)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_rgba_(SEXP pattern_, SEXP red_, SEXP green_, SEXP blue_, SEXP alpha_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double * red = (double *)REAL(red_);
   double * green = (double *)REAL(green_);
@@ -377,7 +377,7 @@ SEXP cairo_pattern_get_rgba_(SEXP pattern_, SEXP red_, SEXP green_, SEXP blue_, 
 // cairo_status_t cairo_pattern_get_color_stop_rgba (cairo_pattern_t *pattern, int index, double *offset, double *red, double *green, double *blue, double *alpha)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_color_stop_rgba_(SEXP pattern_, SEXP index_, SEXP offset_, SEXP red_, SEXP green_, SEXP blue_, SEXP alpha_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int index = isReal(index_) ? (int)REAL(index_)[0] : (int)INTEGER(index_)[0];
   double * offset = (double *)REAL(offset_);
@@ -396,7 +396,7 @@ SEXP cairo_pattern_get_color_stop_rgba_(SEXP pattern_, SEXP index_, SEXP offset_
 // cairo_status_t cairo_pattern_get_color_stop_count (cairo_pattern_t *pattern, int *count)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_color_stop_count_(SEXP pattern_, SEXP count_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   int * count = (int *)INTEGER(count_);
   int result = cairo_pattern_get_color_stop_count(pattern, count);
@@ -410,7 +410,7 @@ SEXP cairo_pattern_get_color_stop_count_(SEXP pattern_, SEXP count_)  {
 // cairo_status_t cairo_pattern_get_linear_points (cairo_pattern_t *pattern, double *x0, double *y0, double *x1, double *y1)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_linear_points_(SEXP pattern_, SEXP x0_, SEXP y0_, SEXP x1_, SEXP y1_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double * x0 = (double *)REAL(x0_);
   double * y0 = (double *)REAL(y0_);
@@ -427,7 +427,7 @@ SEXP cairo_pattern_get_linear_points_(SEXP pattern_, SEXP x0_, SEXP y0_, SEXP x1
 // cairo_status_t cairo_pattern_get_radial_circles (cairo_pattern_t *pattern, double *x0, double *y0, double *r0, double *x1, double *y1, double *r1)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_pattern_get_radial_circles_(SEXP pattern_, SEXP x0_, SEXP y0_, SEXP r0_, SEXP x1_, SEXP y1_, SEXP r1_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   double * x0 = (double *)REAL(x0_);
   double * y0 = (double *)REAL(y0_);
@@ -446,9 +446,9 @@ SEXP cairo_pattern_get_radial_circles_(SEXP pattern_, SEXP x0_, SEXP y0_, SEXP r
 // cairo_status_t cairo_mesh_pattern_get_patch_count (cairo_pattern_t *pattern, unsigned int *count)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_get_patch_count_(SEXP pattern_, SEXP count_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
-  unsigned int *count = isNull(count_) ? NULL : (unsigned int *)R_ExternalPtrAddr(count_);
+  unsigned int *count = TYPEOF(count_) != EXTPTRSXP ? NULL : (unsigned int *)R_ExternalPtrAddr(count_);
   if (count == NULL) error("'unsigned int * count' pointer is invalid/NULL");
   int result = cairo_mesh_pattern_get_patch_count(pattern, count);
   SEXP result_ = PROTECT(ScalarInteger(result));
@@ -461,7 +461,7 @@ SEXP cairo_mesh_pattern_get_patch_count_(SEXP pattern_, SEXP count_)  {
 // cairo_path_t * cairo_mesh_pattern_get_path (cairo_pattern_t *pattern, unsigned int patch_num)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_get_path_(SEXP pattern_, SEXP patch_num_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   unsigned int patch_num = isReal(patch_num_) ? (unsigned int)REAL(patch_num_)[0] : (unsigned int)INTEGER(patch_num_)[0];
   cairo_path_t * result = cairo_mesh_pattern_get_path(pattern, patch_num);
@@ -477,7 +477,7 @@ SEXP cairo_mesh_pattern_get_path_(SEXP pattern_, SEXP patch_num_)  {
 // cairo_status_t cairo_mesh_pattern_get_corner_color_rgba (cairo_pattern_t *pattern, unsigned int patch_num, unsigned int corner_num, double *red, double *green, double *blue, double *alpha)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_get_corner_color_rgba_(SEXP pattern_, SEXP patch_num_, SEXP corner_num_, SEXP red_, SEXP green_, SEXP blue_, SEXP alpha_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   unsigned int patch_num = isReal(patch_num_) ? (unsigned int)REAL(patch_num_)[0] : (unsigned int)INTEGER(patch_num_)[0];
   unsigned int corner_num = isReal(corner_num_) ? (unsigned int)REAL(corner_num_)[0] : (unsigned int)INTEGER(corner_num_)[0];
@@ -496,7 +496,7 @@ SEXP cairo_mesh_pattern_get_corner_color_rgba_(SEXP pattern_, SEXP patch_num_, S
 // cairo_status_t cairo_mesh_pattern_get_control_point (cairo_pattern_t *pattern, unsigned int patch_num, unsigned int point_num, double *x, double *y)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SEXP cairo_mesh_pattern_get_control_point_(SEXP pattern_, SEXP patch_num_, SEXP point_num_, SEXP x_, SEXP y_)  {
-  cairo_pattern_t *pattern = isNull(pattern_) ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
+  cairo_pattern_t *pattern = TYPEOF(pattern_) != EXTPTRSXP ? NULL : (cairo_pattern_t *)R_ExternalPtrAddr(pattern_);
   if (pattern == NULL) error("'cairo_pattern_t * pattern' pointer is invalid/NULL");
   unsigned int patch_num = isReal(patch_num_) ? (unsigned int)REAL(patch_num_)[0] : (unsigned int)INTEGER(patch_num_)[0];
   unsigned int point_num = isReal(point_num_) ? (unsigned int)REAL(point_num_)[0] : (unsigned int)INTEGER(point_num_)[0];
